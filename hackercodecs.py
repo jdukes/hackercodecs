@@ -165,10 +165,10 @@ def ascii85_decode(input, errors='strict'):
     for i in ('y', 'z'):
         for block in input.split(i)[:-1]:
             assert not len(block) % bs, "'%s' found within a block" % i
+            #this will handle the error but it will not give a good
+            #error message
     # supports decoding as adobe or btoa 4.2
     input = input.replace('z', '!!!!!')  # adobe & btoa 4.2
-    # "z" in the middle of a block should be an error... this will not
-    # be correctly handled.
     input = input.replace('y', '+<VdL')  # btoa replace block of ' '
     input = ''.join(re.findall(ascii85_charset, input))
     # silently drop all non-ascii85 chars....
