@@ -62,7 +62,16 @@ MORSE = (
 # ascii85 defs
 ###############################################################################
 
+
 ascii85_charset = re.compile('([!-u]*)')
+
+
+###############################################################################
+# yenc defs
+###############################################################################
+
+
+yenc_escape = [0x00, 0x0a, 0x0d 0x3d]
 
 
 ###############################################################################
@@ -188,6 +197,23 @@ def ascii85_decode(input, errors='strict'):
     if padding:
         output = output[:-padding]
     return output, len(input)
+
+
+def y_encode(input, errors='strict'):
+    output = ''
+    for c in input:
+        o = (ord(c) + 42) % 256
+        if o in yenc_escape:
+            output += '='
+            o = (ord(c) + 64) % 256
+        output += chr(o)
+    return output, len(input)
+
+
+def y_decode(input, errors='strict'):
+    pass
+
+    
 
 
 ###############################################################################
