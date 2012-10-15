@@ -71,12 +71,13 @@ ascii85_charset = re.compile('([!-u]*)')
 ###############################################################################
 
 
-yenc_escape = [0x00, 0x0a, 0x0d 0x3d]
+yenc_escape = [0x00, 0x0a, 0x0d, ord('='), ord('.')]
 
 
 ###############################################################################
 # helper functions
 ###############################################################################
+
 
 def blocks(data, size):
     assert (len(data) % size) == 0, \
@@ -205,15 +206,28 @@ def y_encode(input, errors='strict'):
         o = (ord(c) + 42) % 256
         if o in yenc_escape:
             output += '='
-            o = (ord(c) + 64) % 256
+            o = (o + 64) % 256
         output += chr(o)
     return output, len(input)
 
 
 def y_decode(input, errors='strict'):
-    pass
-
-    
+    output = ''
+    #this is more C than python
+    len_in = len(input)
+    i = 0
+    while True:
+        if i == len_in:
+            break
+        c = ord(input[i])
+        if input[i] == '=':
+            assert len_in > (i + 1), "last character cannot be an escape"
+            i += 1
+            c = (ord(input[i]) - 64) % 256
+        c = (c - 42) % 256
+        i += 1
+        output += chr(c)
+    return output, len(input)
 
 
 ###############################################################################
@@ -235,6 +249,9 @@ CODECS_IN_FILE = {"morse": CodecInfo(name='morse',
                   "ascii85": CodecInfo(name='ascii85',
                                        encode=ascii85_encode,
                                        decode=ascii85_decode),
+                  "y": CodecInfo(name='y',
+                                       encode=y_encode,
+                                       decode=y_decode),
                 }
 
 
