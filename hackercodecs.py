@@ -2,6 +2,7 @@
 #need to add ebcdic
 #http://en.wikipedia.org/wiki/Sixbit_code_pages
 #http://en.wikipedia.org/wiki/Six-bit_BCD
+#add rot-x, a generator of rot 1-25
 import re
 
 from urllib2 import quote as urlquote
@@ -274,7 +275,9 @@ def aba_track_2_decode(input, errors='strict'):
     assert not len_in % 5, "Input must be divisible by 5"
     assert not len_in > (5 * 40), "String too long: cannot be ABA Track 2"
     #we're going to ignore parity for now
-    output = ''.join(chr(int(c[:-1], 2)+48) for c in blocks(input, 5))
+    output = ''.join(chr(int(''.join(reversed(c[:-1])), 2)+48)
+                     for c in blocks(input, 5))
+    
     output = output[-1:]
     return output, len(input)
 
