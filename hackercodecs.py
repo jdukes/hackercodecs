@@ -102,6 +102,26 @@ def parity(bit_array, odd=False):
     return out
 
 
+def rotx(data, rotval):
+    output = []
+    for d in data:
+        if not d.isalpha():
+            output.append(d)
+            continue
+        off = 64
+        if d.islower():
+            off += 32
+        output.append(chr((((ord(d) - off) + rotval) % 26) + off))
+    return ''.join(output)
+
+
+def rotx_codec_generator(rotval):
+    name = "rot%d"  % rotval
+    rx_enc = lambda data: (rotx(data, rotval), len(data))
+    rx_dec = lambda data: (rotx(data, -rotval), len(data))
+    return CodecInfo(name=name, encode=rx_enc, decode=rx_dec)
+
+
 def get_codecs_list():
     """In case you're wondering what's in this package, you can find out.
     """
@@ -289,6 +309,9 @@ def aba_track_2_decode(input, errors='strict'):
     return output, len(input)
 
 
+
+
+
 ###############################################################################
 # Codec Registration
 ###############################################################################
@@ -314,6 +337,11 @@ CODECS_IN_FILE = {"morse": CodecInfo(name='morse',
                 }
 
 
+for r in xrange(26):
+    CODECS_IN_FILE["rot%d" % r] = rotx_codec_generator(r)
+
+
+#this is bad, I need to do something different
 register(lambda name: CODECS_IN_FILE[name])
 
 # Local variables:
