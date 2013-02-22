@@ -86,6 +86,13 @@ def blocks(data, size):
         yield data[i:i + size]
 
 
+def get_codecs_list():
+    """In case you're wondering what's in this package, you can find out.
+    """
+    for codec in  CODECS_IN_FILE.iterkeys():
+        print codec
+
+
 ###############################################################################
 # actual encoders and encoding wrappers
 ###############################################################################
