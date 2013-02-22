@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #need to add ebcdic
+#http://en.wikipedia.org/wiki/Sixbit_code_pages
+#http://en.wikipedia.org/wiki/Six-bit_BCD
+#add rot-x, a generator of rot 1-25
 import re
 
 from urllib2 import quote as urlquote
@@ -75,6 +78,12 @@ yenc_escape = [0x00, 0x0a, 0x0d, ord('='), ord('.')]
 
 
 ###############################################################################
+# BCD 
+###############################################################################
+
+#soon....
+
+###############################################################################
 # helper functions
 ###############################################################################
 
@@ -82,8 +91,15 @@ yenc_escape = [0x00, 0x0a, 0x0d, ord('='), ord('.')]
 def blocks(data, size):
     assert (len(data) % size) == 0, \
            "Cannot divide into blocks of size %s" % size
-    for i in xrange(0, len(data), size):
-        yield data[i:i + size]
+    for i in xrange(0, size):
+        yield data[i:i + size:size]
+
+
+def parity(bit_array, odd=False):
+    out = sum(bit_array) % 2
+    if odd:
+        out = ~out % 2
+    return out
 
 
 def get_codecs_list():
@@ -234,6 +250,42 @@ def y_decode(input, errors='strict'):
         c = (c - 42) % 256
         i += 1
         output += chr(c)
+    return output, len(input)
+
+
+def aba_track_2_encode(input, errors='strict'):
+    output = ''
+    assert all(map(lambda x: 0x3f >= ord(x) >= 0x30, input)), \
+               "Characters found out of range 0x30 - 0x3f"
+    len_in = len(input)
+    assert len_in <= 37, ("No room for sentinel and LRC. "
+                          "Input must be 37 characters or under")
+    input = ";" + input + "?"
+    out = []
+    for c in input:
+        c = ord(c) - 48
+        l = list('{0:0>4b}'.format(c))
+        l = [int(i) for i in reversed(l)]
+        l.append(sum(l) % 2)
+        out.append(l)
+    lrc = [parity(int(l[i]) for l in out) for i in xrange(4)]
+    lrc.append(parity(lrc))
+    out.append(lrc)
+    output = ""
+    for l in out:
+        output += ''.join(str(i) for i in l)
+    return output, len(input)
+
+
+def aba_track_2_decode(input, errors='strict'):
+    len_in = len(input)
+    assert not len_in % 5, "Input must be divisible by 5"
+    assert not len_in > (5 * 40), "String too long: cannot be ABA Track 2"
+    #we're going to ignore parity for now
+    output = ''.join(chr(int(''.join(reversed(c[:-1])), 2)+48)
+                     for c in blocks(input, 5))
+    
+    output = output[-1:]
     return output, len(input)
 
 

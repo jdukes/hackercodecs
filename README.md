@@ -17,7 +17,10 @@ of a specific type.
 The 'url' and 'entity' codecs were added as a quick way to encode and
 decode data for web hacking. 
 
-Other encodings like y-encode have been added, a full list is avaliable by reviewing the code. 
+'y' is a stripped down 'yenc' as used for NNTP. Headers and footers
+are not included, they will need to be handled elsewhere. 
+
+Other encodings may have been added, a full list is avaliable by reviewing the code. 
 
 As I run across, or am told about other obscure encoding methods I
 will continue to add to this library. 
