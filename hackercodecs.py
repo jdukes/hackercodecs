@@ -2,7 +2,6 @@
 #need to add ebcdic
 #http://en.wikipedia.org/wiki/Sixbit_code_pages
 #http://en.wikipedia.org/wiki/Six-bit_BCD
-#add rot-x, a generator of rot 1-25
 import re
 
 from urllib2 import quote as urlquote
@@ -92,7 +91,7 @@ def blocks(data, size):
     assert (len(data) % size) == 0, \
            "Cannot divide into blocks of size %s" % size
     for i in xrange(0, size):
-        yield data[i:i + size:size]
+        yield data[i:i + size]
 
 
 def parity(bit_array, odd=False):
@@ -274,6 +273,7 @@ def y_decode(input, errors='strict'):
 
 
 def aba_track_2_encode(input, errors='strict'):
+    #this is in progress
     output = ''
     assert all(map(lambda x: 0x3f >= ord(x) >= 0x30, input)), \
                "Characters found out of range 0x30 - 0x3f"
@@ -298,13 +298,13 @@ def aba_track_2_encode(input, errors='strict'):
 
 
 def aba_track_2_decode(input, errors='strict'):
+    #this is in progress
     len_in = len(input)
     assert not len_in % 5, "Input must be divisible by 5"
     assert not len_in > (5 * 40), "String too long: cannot be ABA Track 2"
     #we're going to ignore parity for now
-    output = ''.join(chr(int(''.join(reversed(c[:-1])), 2)+48)
-                     for c in blocks(input, 5))
-    
+    print [chr(int(c[:0:-1], 2)+48) for c in blocks(input, 5)]
+    output = ''.join(chr(int(c[:0:-1], 2)+48) for c in blocks(input, 5))
     output = output[-1:]
     return output, len(input)
 
