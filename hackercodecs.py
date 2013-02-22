@@ -256,7 +256,7 @@ CODECS_IN_FILE = {"morse": CodecInfo(name='morse',
                   "ascii85": CodecInfo(name='ascii85',
                                        encode=ascii85_encode,
                                        decode=ascii85_decode),
-                  "y": CodecInfo(name='y',
+                  "yenc": CodecInfo(name='yenc',
                                        encode=y_encode,
                                        decode=y_decode),
                 }
