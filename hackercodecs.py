@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+"""This package provides codecs useful for hacking and hacking related CTFs. 
+"""
 #need to add ebcdic
 #http://en.wikipedia.org/wiki/Sixbit_code_pages
 #http://en.wikipedia.org/wiki/Six-bit_BCD
