@@ -109,11 +109,11 @@ def rotx(data, rotval):
         if not d.isalpha():
             output.append(d)
             continue
-        off = 64
+        off = 65
         if d.islower():
             off += 32
         output.append(chr((((ord(d) - off) + rotval) % 26) + off))
-    return ''.join(output)
+    return unicode(''.join(output))
 
 
 def rotx_codec_generator(rotval):
@@ -339,7 +339,7 @@ CODECS_IN_FILE = {"morse": CodecInfo(name='morse',
                 }
 
 
-for r in xrange(26):
+for r in xrange(1, 26):
     CODECS_IN_FILE["rot%d" % r] = rotx_codec_generator(r)
 
 
