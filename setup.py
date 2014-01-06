@@ -1,16 +1,17 @@
-import os
 from setuptools import setup
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+import os
+import sys
+sys.path.insert(0,os.path.join(os.path.dirname(__file__),'hackercodecs'))
+import hackercodecs
 
 setup(name="hackercodecs",
-      version="0.1",
+      version="0.2",
       description="A set of codecs for hackers",
       url="https://github.com/jdukes/hackercodecs",
       author="Josh Dukes",
       author_email="hex@neg9.org",
       license="MIT",
       keywords = "hacker, codecs, CTF",
-      long_description=read('README.md'),
+      long_description=hackercodecs.__doc__,
       packages=["hackercodecs"])
