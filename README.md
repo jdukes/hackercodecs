@@ -1,10 +1,11 @@
 Hacker Codecs
 =============
 
-This is a set of codecs for decoding and encoing things. Specifically
-this was designed originally around the fact that decode('bin')
-doesn't exist in the standard library and there are times (especially
-in a CTF) where this is extremely convinient. 
+This is a set of codecs for decoding and encoing things related to
+hacking and hacking CTFs. Specifically this was designed
+originally around the fact that decode('bin') doesn't exist in the
+standard library and there are times (especially in a CTF) where this
+is extremely convinient.
 
 Later 'morse' was added to easily encode and decode morse code without
 needing to do it (as) manually. 
