@@ -1,7 +1,163 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """This package provides codecs useful for hacking and hacking related CTFs. 
+
+There are several codecs avaliable once you import this module. To get
+a full list you can use the CODECS_IN_FILE dictionary which is used to
+populated the codec entries:
+
+>>> pprint(sorted(CODECS_IN_FILE.keys()))
+['ascii85',
+ 'bin',
+ 'entity',
+ 'morse',
+ 'rot1',
+ 'rot10',
+ 'rot11',
+ 'rot12',
+ 'rot13',
+ 'rot14',
+ 'rot15',
+ 'rot16',
+ 'rot17',
+ 'rot18',
+ 'rot19',
+ 'rot2',
+ 'rot20',
+ 'rot21',
+ 'rot22',
+ 'rot23',
+ 'rot24',
+ 'rot25',
+ 'rot3',
+ 'rot4',
+ 'rot5',
+ 'rot6',
+ 'rot7',
+ 'rot8',
+ 'rot9',
+ 'url',
+ 'yenc']
+
+
+You should first notice all the "rot" entries. The `rot-13` codec is
+provided by default. The rest of these provide similar functionality
+for rapid checks of shift ciphers:
+
+>>> pprint(['ymj vznhp gwtbs ktc ozruji tajw ymj qfed itl'.decode('rot%d' % i) for i in xrange(1,26)])
+[u'xli uymgo fvsar jsb nyqtih sziv xli pedc hsk',
+ u'wkh txlfn eurzq ira mxpshg ryhu wkh odcb grj',
+ u'vjg swkem dtqyp hqz lworgf qxgt vjg ncba fqi',
+ u'uif rvjdl cspxo gpy kvnqfe pwfs uif mbaz eph',
+ u'the quick brown fox jumped over the lazy dog',
+ u'sgd pthbj aqnvm enw itlodc nudq sgd kzyx cnf',
+ u'rfc osgai zpmul dmv hskncb mtcp rfc jyxw bme',
+ u'qeb nrfzh yoltk clu grjmba lsbo qeb ixwv ald',
+ u'pda mqeyg xnksj bkt fqilaz kran pda hwvu zkc',
+ u'ocz lpdxf wmjri ajs ephkzy jqzm ocz gvut yjb',
+ u'nby kocwe vliqh zir dogjyx ipyl nby futs xia',
+ u'max jnbvd ukhpg yhq cnfixw hoxk max etsr whz',
+ u'lzw imauc tjgof xgp bmehwv gnwj lzw dsrq vgy',
+ u'kyv hlztb sifne wfo aldgvu fmvi kyv crqp ufx',
+ u'jxu gkysa rhemd ven zkcfut eluh jxu bqpo tew',
+ u'iwt fjxrz qgdlc udm yjbets dktg iwt apon sdv',
+ u'hvs eiwqy pfckb tcl xiadsr cjsf hvs zonm rcu',
+ u'gur dhvpx oebja sbk whzcrq bire gur ynml qbt',
+ u'ftq cguow ndaiz raj vgybqp ahqd ftq xmlk pas',
+ u'esp bftnv mczhy qzi ufxapo zgpc esp wlkj ozr',
+ u'dro aesmu lbygx pyh tewzon yfob dro vkji nyq',
+ u'cqn zdrlt kaxfw oxg sdvynm xena cqn ujih mxp',
+ u'bpm ycqks jzwev nwf rcuxml wdmz bpm tihg lwo',
+ u'aol xbpjr iyvdu mve qbtwlk vcly aol shgf kvn',
+ u'znk waoiq hxuct lud pasvkj ubkx znk rgfe jum']
+
+"the quick brown fox jumped over the lazy dog" <- bingo
+
+My favorite codec, and reason I started the project, is of course
+morse encoding:
+
+>>> 'SOS'.encode('morse')
+'... --- ...'
+
+>>> '... --- ...'.decode('morse')
+'SOS'
+
+Morse code is doesn't support the full ascii character set, nor does
+it support casing so keep that in mind:
+
+>>> 'asdf'.encode('morse').decode('morse')
+'ASDF'
+
+>>> "THIS IS MORSE CODE!".encode('morse')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/hex/progz/python/hackercodecs/hackercodecs/__init__.py", line 247, in morse_encode
+    assert c in morse_map, "Unencodable character '%s' found. Failing" % c
+AssertionError: Unencodable character '!' found. Failing
+
+Another favorite of mine is `bin`. It's only a few lines, but there's
+no reason to write those same lines over and over again each CTF. Just
+let hackercodecs handle that for you:
+
+>>> 'asdf'.encode('bin')
+'01100001011100110110010001100110'
+
+>>> '01100001011100110110010001100110'.decode('bin')
+'asdf'
+
+It also counts bits to make sure you're not doing something stupid:
+
+'0110000101110011011001000110011'.decode('bin')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/hex/progz/python/hackercodecs/hackercodecs/__init__.py", line 275, in bin_decode
+    assert (len(input) % 8) == 0, \
+AssertionError: Wrong number of bits, 31 is not divisible by 8
+
+If you ever hack on web challenges you know how nice it is to have
+urllib handle url encoding. Since we already have this library for
+hacker codecs, I figured it would be worth while to just add
+that. Everything in one place is nice sometimes:
+
+>>> "' or ''='".encode('url')
+'%27%20or%20%27%27%3D%27'
+>>> '%27%20or%20%27%27%3D%27'.decode('url')
+"' or ''='"
+
+Likewise entity encoding can be nice when attacking some XML based
+challenge:
+
+>>> "]]>&xxe;".encode('entity')
+']]&gt;&amp;xxe;'
+
+>>> ']]&gt;&amp;xxe;'.decode('entity')
+']]>&xxe;'
+
+Then we get a little less common. If you're from the internet you
+Might know that usenet uses yEnc:
+
+>>> print repr('asdf'.encode('yenc'))
+'\\x8b\\x9d\\x8e\\x90'
+
+>>> '\\x8b\\x9d\\x8e\\x90'.decode('yenc')
+'asdf'
+
+And if you work on PDFs at all, you may have seen ascii85. It's kind
+of like base64, but not really at all:
+
+>>> 'asdf'.encode('ascii85')
+'@<5sk'
+
+>>> '@<5sk'.decode('ascii85')
+'asdf'
+
+In the future I'll probably add more things
+(http://en.wikipedia.org/wiki/Binary-to-text_encoding)... after
+porting everything to python 3. If there are any special requests for
+encodings you'd like me to add feel free to write them yourself and
+submit a patch. It should be pretty damn easy to add a codec based on
+the code below.
+
 """
-#need to add ebcdic
 #http://en.wikipedia.org/wiki/Sixbit_code_pages
 #http://en.wikipedia.org/wiki/Six-bit_BCD
 import re
@@ -350,3 +506,8 @@ register(lambda name: CODECS_IN_FILE[name])
 # eval: (add-hook 'after-save-hook '(lambda ()
 #           (shell-command "pep8 hackercodecs.py > lint")) nil t)
 # end:
+
+if __name__ == "__main__":
+    import doctest
+    from pprint import pprint
+    doctest.testmod()
