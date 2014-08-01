@@ -9,6 +9,7 @@ populated the codec entries:
 ['ascii85',
  'bin',
  'entity',
+ 'entityhex',
  'morse',
  'rot1',
  'rot10',
@@ -132,6 +133,12 @@ challenge:
 >>> ']]&gt;&amp;xxe;'.decode('entity')
 ']]>&xxe;'
 
+Or the hex equivilent
+
+>>> '<script>alert("1")</script>'.encode('entityhex')
+'&#x3c;script&#x3e;alert("1")&#x3c;/script&#x3e;'
+
+
 Then we get a little less common. If you're from the internet you
 Might know that usenet uses yEnc:
 
@@ -164,6 +171,9 @@ import re
 
 from urllib2 import quote as urlquote
 from urllib2 import unquote as urlunquote
+from urllib import _is_unicode
+from urllib import _asciire
+from urllib import _hextochr
 from xml.sax.saxutils import escape as entityquote
 from xml.sax.saxutils import unescape as entityunquote
 from codecs import register, CodecInfo
@@ -347,6 +357,53 @@ def entity_encode(input, errors='strict'):
     output = entityquote(input)
     return (output, len(input))
 
+def entity_encode_hex(input, errors='strict'):
+    """
+    Encode &, <, and > in a string of data.
+    as their hex HTML entity representation.
+    """
+    output = ''
+    for character in input:
+        if character in ('&', '<', '>'):
+            output += "&#x%s;" % character.encode('hex')
+        else:
+            output += character
+
+    return (output, len(input))
+
+def entity_decode_hex(input, errors='strict'):
+    """
+    Decode hex HTML entity data in a string.
+    """
+    if _is_unicode(input):
+        if '%' not in input:
+            return s
+        bits = _asciire.split(input)
+        res = [bits[0]]
+        append = res.append
+        for i in range(1, len(bits), 2):
+            append(unquote(str(bits[i])).decode('latin1'))
+            append(bits[i + 1])
+        return (''.join(res), len(input))
+
+    preamble_regex = re.compile(r"&#x", flags=re.I)
+    bits = preamble_regex.split(input)
+    # fastpath
+    if len(bits) == 1:
+        return input
+    res = [bits[0]]
+    append = res.append
+    for item in bits[1:]:
+        try:
+            append(_hextochr[item[:2]])
+            append(item[3:])
+        except KeyError:
+            append('&#x')
+            append(item)
+            append(';')
+
+    return (''.join(res), len(input))
+
 
 def ascii85_encode(input, errors='strict'):
     #encoding is adobe not btoa
@@ -486,6 +543,9 @@ CODECS_IN_FILE = {"morse": CodecInfo(name='morse',
                   "entity": CodecInfo(name='entity',
                                    encode=entity_encode,
                                    decode=entity_decode),
+                  "entityhex": CodecInfo(name='entityhex',
+                                   encode=entity_encode_hex,
+                                   decode=entity_decode_hex),
                   "ascii85": CodecInfo(name='ascii85',
                                        encode=ascii85_encode,
                                        decode=ascii85_decode),
