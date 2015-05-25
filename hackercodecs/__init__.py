@@ -182,49 +182,66 @@ from codecs import register, CodecInfo
 from struct import pack, unpack
 
 ###############################################################################
-# Morse Codec Defs
+# Morse Codec Defs (International Morse Code)
+# Reference:
+# https://en.wikipedia.org/wiki/Morse_code#Letters.2C_numbers.2C_punctuation.2C_prosigns_and_non-English_variants
 ###############################################################################
 MORSE = (
-    ('A', ".-"),
-    ('B', "-..."),
-    ('C', "-.-."),
-    ('D', "-.."),
-    ('E', "."),
-    ('F', "..-."),
-    ('G', "--."),
-    ('H', "...."),
-    ('I', ".."),
-    ('J', ".---"),
-    ('K', "-.-"),
-    ('L', ".-.."),
-    ('M', "--"),
-    ('N', "-."),
-    ('O', "---"),
-    ('P', ".--."),
-    ('Q', "--.-"),
-    ('R', ".-."),
-    ('S', "..."),
-    ('T', "-"),
-    ('U', "..-"),
-    ('V', "...-"),
-    ('W', ".--"),
-    ('X', "-..-"),
-    ('Y', "-.--"),
-    ('Z', "--.."),
-    ('0', "-----"),
-    ('1', ".----"),
-    ('2', "..---"),
-    ('3', "...--"),
-    ('4', "....-"),
-    ('5', "....."),
-    ('6', "-...."),
-    ('7', "--..."),
-    ('8', "---.."),
-    ('9', "----."),
-    (' ', "/"),
-    ('.', ".-.-.-"),
-    (',', "--..--"),
-    ('?', "..--.."),
+    ('A', ".-"),            # A, a
+    ('B', "-..."),          # B, b
+    ('C', "-.-."),          # C, c
+    ('D', "-.."),           # D, d
+    ('E', "."),             # E, e
+    ('F', "..-."),          # F, f
+    ('G', "--."),           # G, g
+    ('H', "...."),          # H, h
+    ('I', ".."),            # I, i
+    ('J', ".---"),          # J, j
+    ('K', "-.-"),           # K, k; also used to indicate "Invitation to Transmit"
+    ('L', ".-.."),          # L, l
+    ('M', "--"),            # M, m
+    ('N', "-."),            # N, n
+    ('O', "---"),           # O, o
+    ('P', ".--."),          # P, p
+    ('Q', "--.-"),          # Q, q
+    ('R', ".-."),           # R, r
+    ('S', "..."),           # S, s
+    ('T', "-"),             # T, t
+    ('U', "..-"),           # U, u
+    ('V', "...-"),          # V, v
+    ('W', ".--"),           # W, w
+    ('X', "-..-"),          # X, x
+    ('Y', "-.--"),          # Y, y
+    ('Z', "--.."),          # Z, z
+    ('0', "-----"),         # 0
+    ('1', ".----"),         # 1
+    ('2', "..---"),         # 2
+    ('3', "...--"),         # 3
+    ('4', "....-"),         # 4
+    ('5', "....."),         # 5
+    ('6', "-...."),         # 6
+    ('7', "--..."),         # 7
+    ('8', "---.."),         # 8
+    ('9', "----."),         # 9
+    (' ', "/"),             # Currently used to indicate character boundaries
+    ('.', ".-.-.-"),        # Period
+    (',', "--..--"),        # Comma
+    ('?', "..--.."),        # Question Mark
+    ('\'', ".----."),       # Apostrophe
+    ('!', "-.-.--"),        # Exclamation Point, Digraph: KW (Not standardized, ---. also used)
+    ('/', "-..-."),         # Slash or Fraction Bar
+    ('(', "-.--."),         # Open Parenthesis
+    (')', "-.--.-"),        # Close Parenthesis
+    ('&', ".-..."),         # Ampersand, Digraph: AS, Prosign: Wait (Not in ITU-R recommendation)
+    (':', "---..."),        # Colon
+    (';', "-.-.-."),        # Semicolon
+    ('=', "-...-"),         # Double Dash (Equal Sign)
+    ('+', ".-.-."),         # Plus Sign
+    ('-', "-....-"),        # Hyphen or Minus Sign
+    ('_', "..--.-"),        # Underscore (Not in ITU-R recommendation)
+    ('"', ".-..-."),        # Quotation Mark
+    ('$', "...-..-"),       # Dollar Sign, Digraph: SX (Not in ITU-R recommendation)
+    ('@', ".--.-."),        # At Sign, Digraph: AC (Formally added to ITU-R recommendation in 2004)
     ('', '')
     )
 
