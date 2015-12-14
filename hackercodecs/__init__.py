@@ -567,3 +567,17 @@ register(lambda name: CODECS_IN_FILE[name])
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+
+# Copyright © 2012–2015 Josh Dukes <hex@neg9.org> and contributors.
+#
+# This is free software: you may copy, modify, and/or distribute this work
+# under the terms of the Expat License.
+# No warranty expressed or implied. See the file ‘LICENSE.Expat’ for details.
+
+# Local variables:
+# coding: utf-8
+# mode: text
+# mode: markdown
+# End:
+# vim: fileencoding=utf-8 filetype=markdown :

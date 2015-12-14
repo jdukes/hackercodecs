@@ -26,3 +26,21 @@ Other encodings may have been added, a full list is avaliable by reviewing the c
 As I run across, or am told about other obscure encoding methods I
 will continue to add to this library. 
 
+
+Copying
+-------
+
+Copyright © 2012–2015 Josh Dukes <hex@neg9.org> and contributors.
+
+This is free software: you may copy, modify, and/or distribute this work
+under the terms of the Expat License.
+No warranty expressed or implied. See the file ‘LICENSE.Expat’ for details.
+
+
+[comment]: # Local variables:
+[comment]: # coding: utf-8
+[comment]: # mode: text
+[comment]: # mode: markdown
+[comment]: # End:
+[comment]: # vim: fileencoding=utf-8 filetype=markdown :
+
