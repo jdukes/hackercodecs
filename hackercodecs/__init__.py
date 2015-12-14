@@ -6,7 +6,8 @@ There are several codecs avaliable once you import this module. To get
 a full list you can use the CODECS_IN_FILE dictionary which is used to
 populated the codec entries::
 
-    >>> pprint(sorted(CODECS_IN_FILE.keys()))
+    >>> import pprint
+    >>> pprint.pprint(sorted(CODECS_IN_FILE.keys()))
     ['ascii85',
      'bin',
      'entity',
@@ -45,7 +46,7 @@ You should first notice all the "rot" entries. The `rot-13` codec is
 provided by default. The rest of these provide similar functionality
 for rapid checks of shift ciphers::
 
-    >>> pprint(['ymj vznhp gwtbs ktc ozruji tajw ymj qfed itl'.decode('rot%d' % i) for i in xrange(1,26)])
+    >>> pprint.pprint(['ymj vznhp gwtbs ktc ozruji tajw ymj qfed itl'.decode('rot%d' % i) for i in xrange(1,26)])
     [u'xli uymgo fvsar jsb nyqtih sziv xli pedc hsk',
      u'wkh txlfn eurzq ira mxpshg ryhu wkh odcb grj',
      u'vjg swkem dtqyp hqz lworgf qxgt vjg ncba fqi',
@@ -91,9 +92,7 @@ it support casing so keep that in mind::
 
     >>> "THIS IS MORSE CODE!".encode('morse')
     Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      File "/home/hex/progz/python/hackercodecs/hackercodecs/__init__.py", line 247, in morse_encode
-        assert c in morse_map, "Unencodable character '%s' found. Failing" % c
+    ...
     AssertionError: Unencodable character '!' found. Failing
 
 Another favorite of mine is `bin`. It's only a few lines, but there's
@@ -110,9 +109,7 @@ It also counts bits to make sure you're not doing something stupid::
 
     '0110000101110011011001000110011'.decode('bin')
     Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      File "/home/hex/progz/python/hackercodecs/hackercodecs/__init__.py", line 275, in bin_decode
-        assert (len(input) % 8) == 0, \
+    ...
     AssertionError: Wrong number of bits, 31 is not divisible by 8
 
 If you ever hack on web challenges you know how nice it is to have
@@ -569,5 +566,4 @@ register(lambda name: CODECS_IN_FILE[name])
 
 if __name__ == "__main__":
     import doctest
-    from pprint import pprint
     doctest.testmod()
