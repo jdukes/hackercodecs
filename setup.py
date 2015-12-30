@@ -1,4 +1,6 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
 
 from setuptools import setup
 
@@ -18,7 +20,7 @@ setup(name="hackercodecs",
       long_description=hackercodecs.__doc__,
       packages=["hackercodecs"])
 
-
+
 # Copyright © 2012–2015 Josh Dukes <hex@neg9.org> and contributors.
 #
 # This is free software: you may copy, modify, and/or distribute this work
@@ -27,7 +29,5 @@ setup(name="hackercodecs",
 
 # Local variables:
 # coding: utf-8
-# mode: text
-# mode: markdown
 # End:
 # vim: fileencoding=utf-8 filetype=markdown :

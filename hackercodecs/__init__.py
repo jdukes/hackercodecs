@@ -164,8 +164,8 @@ submit a patch. It should be pretty damn easy to add a codec based on
 the code below.
 
 """
-#http://en.wikipedia.org/wiki/Sixbit_code_pages
-#http://en.wikipedia.org/wiki/Six-bit_BCD
+# http://en.wikipedia.org/wiki/Sixbit_code_pages
+# http://en.wikipedia.org/wiki/Six-bit_BCD
 import re
 
 from urllib2 import quote as urlquote
@@ -195,7 +195,8 @@ MORSE = (
     ('H', "...."),          # H, h
     ('I', ".."),            # I, i
     ('J', ".---"),          # J, j
-    ('K', "-.-"),           # K, k; also used to indicate "Invitation to Transmit"
+    ('K', "-.-"),           # K, k; 
+                            # also used to indicate "Invitation to Transmit"
     ('L', ".-.."),          # L, l
     ('M', "--"),            # M, m
     ('N', "-."),            # N, n
@@ -264,7 +265,7 @@ yenc_escape = [0x00, 0x0a, 0x0d, ord('='), ord('.')]
 # BCD
 ###############################################################################
 
-#soon....
+# soon....
 
 ###############################################################################
 # helper functions
@@ -578,16 +579,16 @@ for r in xrange(1, 26):
 #this is bad, I need to do something different
 register(lambda name: CODECS_IN_FILE[name])
 
-# Local variables:
-# eval: (add-hook 'after-save-hook '(lambda ()
-#           (shell-command "pep8 hackercodecs.py > lint")) nil t)
-# end:
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-
+# Local variables:
+# eval: (add-hook 'after-save-hook '(lambda ()
+#           (shell-command "pep8 __init__.py > lint")) nil t)
+# end:
+
 # Copyright © 2012–2015 Josh Dukes <hex@neg9.org> and contributors.
 #
 # This is free software: you may copy, modify, and/or distribute this work
