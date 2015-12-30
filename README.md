@@ -37,10 +37,3 @@ under the terms of the Expat License.
 No warranty expressed or implied. See the file ‘LICENSE.Expat’ for details.
 
 
-[comment]: # Local variables:
-[comment]: # coding: utf-8
-[comment]: # mode: text
-[comment]: # mode: markdown
-[comment]: # End:
-[comment]: # vim: fileencoding=utf-8 filetype=markdown :
-
