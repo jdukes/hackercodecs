@@ -577,7 +577,7 @@ for r in xrange(1, 26):
 
 
 #this is bad, I need to do something different
-register(lambda name: CODECS_IN_FILE[name])
+register(lambda name: CODECS_IN_FILE.get(name, None))
 
 
 if __name__ == "__main__":
