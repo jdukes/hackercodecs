@@ -1,7 +1,5 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-
-
 from setuptools import setup
 
 import os
@@ -16,6 +14,8 @@ setup(name="hackercodecs",
       author="Josh Dukes",
       author_email="hex@neg9.org",
       license="MIT",
+      test_suite="tests.HackerCodecsSuite",
+      tests_require=['hypothesis','doctest'],
       keywords = "hacker, codecs, CTF",
       long_description=hackercodecs.__doc__,
       packages=["hackercodecs"])
