@@ -30,4 +30,4 @@ setup(name="hackercodecs",
 # Local variables:
 # coding: utf-8
 # End:
-# vim: fileencoding=utf-8 filetype=markdown :
+# vim: fileencoding=utf-8 filetype=python:

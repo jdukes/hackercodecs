@@ -600,4 +600,4 @@ if __name__ == "__main__":
 # mode: text
 # mode: markdown
 # End:
-# vim: fileencoding=utf-8 filetype=markdown :
+# vim: fileencoding=utf-8 filetype=python:
