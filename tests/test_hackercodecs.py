@@ -49,13 +49,6 @@ class TestHelperFunctions(unittest.TestCase):
         codec = rotx_codec_generator(10)
         self.assertEqual(codec.name, 'rot10')
 
-    def test_get_codecs_list(self):
-        # self.assertEqual(expected, get_codecs_list())
-        assert False # TODO: implement your test here
-
-    def test_get_codecs_not_in_list(self):
-        # self.assertEqual(expected, get_codecs_list())
-        assert False # TODO: implement your test here
 
 class TestCodecs(unittest.TestCase):
     @given(st.text(alphabet=''.join(i[0] for i in MORSE)))
@@ -73,7 +66,6 @@ class TestCodecs(unittest.TestCase):
 
     @given(st.text())
     def test_url(self, s):
-        # s=u'\u0100'
         assume(all(ord(c) <= 255 for c in s))
         encoded, encoded_len = bin_encode(s)
         decoded, decoded_len = bin_decode(encoded)
@@ -104,7 +96,6 @@ class TestCodecs(unittest.TestCase):
 
     @given(st.text())
     def test_y(self, s):
-        # s=u'\x80'
         assume(all(ord(c) <= 255 for c in s))
         encoded, encoded_len = y_encode(s)
         decoded, decoded_len = y_decode(encoded)
