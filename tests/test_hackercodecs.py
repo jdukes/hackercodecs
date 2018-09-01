@@ -102,11 +102,11 @@ class TestCodecs(unittest.TestCase):
         assert s.encode('bin') == decoded.encode('bin')
 
     ## these need a lot of fixing
-    # @given(st.text())
-    # def test_aba_track_2(self, s):
-    #     encoded, encoded_len = aba_track_2_encode(s)
-    #     decoded, decoded_len = aba_track_2_decode(encoded)
-    #     assert s == decoded
+    @given(st.text())
+    def test_aba_track_2(self, s):
+        encoded, encoded_len = aba_track_2_encode(s)
+        decoded, decoded_len = aba_track_2_decode(encoded)
+        assert s.encode('bin') == decoded.encode('bin')
 
 
 if __name__ == '__main__':
