@@ -92,10 +92,10 @@ it support casing so keep that in mind::
     >>> 'asdf'.encode('morse').decode('morse')
     'ASDF'
 
-    >>> "THIS IS MORSE CODE!".encode('morse')
+    >>> "#THIS IS MORSE CODE#".encode('morse')
     Traceback (most recent call last):
     ...
-    AssertionError: Unencodable character '!' found. Failing
+    AssertionError: Unencodable character '#' found. Failing
 
 Another favorite of mine is `bin`. It's only a few lines, but there's
 no reason to write those same lines over and over again each CTF. Just
