@@ -4,7 +4,7 @@ from sys import path
 path.append('../')
 from hackercodecs import *
 
-class TestBlocks(unittest.TestCase):
+class TestHelperFunctions(unittest.TestCase):
 
     @given(st.tuples(st.text(), st.integers()))
     def test_blocks(self, s):
