@@ -1,8 +1,12 @@
 import unittest
+from hypothesis import given, strategies as st
+from sys import path
+path.append('../')
+from hackercodecs import *
 
 class TestBlocks(unittest.TestCase):
     def test_blocks(self):
-        
+        # should always yield equal size blocks
         # self.assertEqual(expected, blocks(data, size))
         assert False # TODO: implement your test here
 
@@ -26,85 +30,64 @@ class TestGetCodecsList(unittest.TestCase):
         # self.assertEqual(expected, get_codecs_list())
         assert False # TODO: implement your test here
 
-class TestMorseEncode(unittest.TestCase):
-    def test_morse_encode(self):
-        # self.assertEqual(expected, morse_encode(input, errors))
+    def test_get_codecs_not_in_list(self):
+        # self.assertEqual(expected, get_codecs_list())
         assert False # TODO: implement your test here
 
-class TestMorseDecode(unittest.TestCase):
-    def test_morse_decode(self):
-        # self.assertEqual(expected, morse_decode(input, errors))
-        assert False # TODO: implement your test here
+class TestCodecs(unittest.TestCase):
+    @given(st.text(alphabet=''.join(i[0] for i in MORSE)))
+    def test_morse(self, s):
+        encoded,encoded_len = morse_encode(s)
+        decoded, decoded_len = morse_decode(encoded)
+        assert str(s.upper()) == decoded
 
-class TestBinEncode(unittest.TestCase):
-    def test_bin_encode(self):
-        # self.assertEqual(expected, bin_encode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_bin(self, s):
+        # s=u'\u0100'
+        encoded, encoded_len = bin_encode(s)
+        decoded, decoded_len = bin_decode(encoded)
+        assert str(s) == decoded
 
-class TestBinDecode(unittest.TestCase):
-    def test_bin_decode(self):
-        # self.assertEqual(expected, bin_decode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_url(self, s):
+        # s=u'\u0100'
+        encoded, encoded_len = bin_encode(s)
+        decoded, decoded_len = bin_decode(encoded)
+        assert str(s) == decoded
 
-class TestUrlDecode(unittest.TestCase):
-    def test_url_decode(self):
-        # self.assertEqual(expected, url_decode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_entity(self, s):
+        encoded, encoded_len = entity_encode(s)
+        decoded, decoded_len = entity_decode(encoded)
+        assert str(s) == decoded
 
-class TestUrlEncode(unittest.TestCase):
-    def test_url_encode(self):
-        # self.assertEqual(expected, url_encode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_entity_hex(self, s):
+        encoded, encoded_len = entity_encode_hex(s)
+        decoded, decoded_len = entity_decode_hex(encoded)
+        assert str(s) == decoded
 
-class TestEntityDecode(unittest.TestCase):
-    def test_entity_decode(self):
-        # self.assertEqual(expected, entity_decode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_ascii85(self, s):
+        # u'\x80'
+        encoded, encoded_len = ascii85_encode(s)
+        decoded, decoded_len = ascii85_decode(encoded)
+        assert str(s) == decoded
 
-class TestEntityEncode(unittest.TestCase):
-    def test_entity_encode(self):
-        # self.assertEqual(expected, entity_encode(input, errors))
-        assert False # TODO: implement your test here
+    @given(st.text())
+    def test_y(self, s):
+        # s=u'\x80'
+        encoded, encoded_len = y_encode(s)
+        decoded, decoded_len = y_decode(encoded)
+        assert str(s) == decoded
 
-class TestEntityEncodeHex(unittest.TestCase):
-    def test_entity_encode_hex(self):
-        # self.assertEqual(expected, entity_encode_hex(input, errors))
-        assert False # TODO: implement your test here
+    ## these need a lot of fixing
+    @given(st.text())
+    def test_aba_track_2(self, s):
+        encoded, encoded_len = aba_track_2_encode(s)
+        decoded, decoded_len = aba_track_2_decode(encoded)
+        assert s == decoded
 
-class TestEntityDecodeHex(unittest.TestCase):
-    def test_entity_decode_hex(self):
-        # self.assertEqual(expected, entity_decode_hex(input, errors))
-        assert False # TODO: implement your test here
-
-class TestAscii85Encode(unittest.TestCase):
-    def test_ascii85_encode(self):
-        # self.assertEqual(expected, ascii85_encode(input, errors))
-        assert False # TODO: implement your test here
-
-class TestAscii85Decode(unittest.TestCase):
-    def test_ascii85_decode(self):
-        # self.assertEqual(expected, ascii85_decode(input, errors))
-        assert False # TODO: implement your test here
-
-class TestYEncode(unittest.TestCase):
-    def test_y_encode(self):
-        # self.assertEqual(expected, y_encode(input, errors))
-        assert False # TODO: implement your test here
-
-class TestYDecode(unittest.TestCase):
-    def test_y_decode(self):
-        # self.assertEqual(expected, y_decode(input, errors))
-        assert False # TODO: implement your test here
-
-class TestAbaTrack2Encode(unittest.TestCase):
-    def test_aba_track_2_encode(self):
-        # self.assertEqual(expected, aba_track_2_encode(input, errors))
-        assert False # TODO: implement your test here
-
-class TestAbaTrack2Decode(unittest.TestCase):
-    def test_aba_track_2_decode(self):
-        # self.assertEqual(expected, aba_track_2_decode(input, errors))
-        assert False # TODO: implement your test here
 
 if __name__ == '__main__':
     unittest.main()
