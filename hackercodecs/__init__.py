@@ -396,7 +396,7 @@ def entity_decode_hex(input, errors='strict'):
     """
     if _is_unicode(input):
         if '%' not in input:
-            return s
+            return input, len(input)
         bits = _asciire.split(input)
         res = [bits[0]]
         append = res.append
@@ -409,7 +409,7 @@ def entity_decode_hex(input, errors='strict'):
     bits = preamble_regex.split(input)
     # fastpath
     if len(bits) == 1:
-        return input
+        return input, len(input)
     res = [bits[0]]
     append = res.append
     for item in bits[1:]:
