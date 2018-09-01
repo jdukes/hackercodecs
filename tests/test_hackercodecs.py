@@ -5,10 +5,26 @@ path.append('../')
 from hackercodecs import *
 
 class TestBlocks(unittest.TestCase):
-    def test_blocks(self):
-        # should always yield equal size blocks
-        # self.assertEqual(expected, blocks(data, size))
-        assert False # TODO: implement your test here
+
+    @given(st.tuples(st.text(), st.integers()))
+    def test_blocks(self, s):
+        data, size = s
+        assume(size > 0) # we don't need to check divide by zero
+        if not ((len(data) % size) == 0):
+            # make sure we assert here
+            try:
+                blocks(data, size)
+            except AssertionError, e:
+                assert e.message == (
+                    "Cannot divide into blocks of size %s" % size)
+        else:
+            results = blocks(data, size)
+            try:
+                first = next(results)
+                assert all(len(r) == len(first)
+                           for r in results)
+            except StopIteration:
+                pass
 
 class TestParity(unittest.TestCase):
     def test_parity(self):
