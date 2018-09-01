@@ -68,7 +68,8 @@ class TestCodecs(unittest.TestCase):
         assume(all(ord(c) <= 255 for c in s))
         encoded, encoded_len = entity_encode_hex(s)
         decoded, decoded_len = entity_decode_hex(encoded)
-        assert s.encode('bin') == decoded.encode('bin')
+        assert s.encode('bin') == decoded.encode('bin'), (
+            "{} != {}".format(s, decoded))
 
     # @given(st.text())
     # def test_ascii85(self, s):

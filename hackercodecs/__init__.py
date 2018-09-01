@@ -395,16 +395,15 @@ def entity_decode_hex(input, errors='strict'):
     Decode hex HTML entity data in a string.
     """
     if _is_unicode(input):
-        if '%' not in input:
+        if '&' not in input:
             return input, len(input)
         bits = _asciire.split(input)
         res = [bits[0]]
         append = res.append
         for i in range(1, len(bits), 2):
-            append(unquote(str(bits[i])).decode('latin1'))
+            append(entityunquote(str(bits[i]))
+                   .encode('bin').decode('bin'))
             append(bits[i + 1])
-        return (''.join(res), len(input))
-
     preamble_regex = re.compile(r"&#x", flags=re.I)
     bits = preamble_regex.split(input)
     # fastpath
