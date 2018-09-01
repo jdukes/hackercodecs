@@ -35,17 +35,14 @@ class TestHelperFunctions(unittest.TestCase):
            assert parity(s) == 1
            assert parity(s, odd=True) == 0
 
-class TestRotx(unittest.TestCase):
     def test_rotx(self):
         # self.assertEqual(expected, rotx(data, rotval))
         assert False # TODO: implement your test here
 
-class TestRotxCodecGenerator(unittest.TestCase):
     def test_rotx_codec_generator(self):
         # self.assertEqual(expected, rotx_codec_generator(rotval))
         assert False # TODO: implement your test here
 
-class TestGetCodecsList(unittest.TestCase):
     def test_get_codecs_list(self):
         # self.assertEqual(expected, get_codecs_list())
         assert False # TODO: implement your test here
