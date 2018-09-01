@@ -35,9 +35,13 @@ class TestHelperFunctions(unittest.TestCase):
            assert parity(s) == 1
            assert parity(s, odd=True) == 0
 
-    def test_rotx(self):
-        # self.assertEqual(expected, rotx(data, rotval))
-        assert False # TODO: implement your test here
+    @given(st.tuples(st.text(),
+                     st.integers().filter(lambda x: x < 26)))
+    def test_rotx(self, s):
+        data, rot = s
+        encoded = rotx(data, rot)
+        decoded = rotx(encoded, -rot)
+        assert data == decoded
 
     def test_rotx_codec_generator(self):
         # self.assertEqual(expected, rotx_codec_generator(rotval))
