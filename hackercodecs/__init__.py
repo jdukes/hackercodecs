@@ -434,6 +434,7 @@ def entity_decode_hex(input, errors='strict'):
 
 
 def ascii85_encode(input, errors='strict'):
+    assert not input.endswith('\0'), "Trailing nulls unsupported"
     if _is_unicode(input):
         # convert from multibyte to codepoint in a horrible way. Good
         # luck debugging the stupid bugs here fuckers.
