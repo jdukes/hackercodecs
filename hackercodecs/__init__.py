@@ -340,9 +340,11 @@ def morse_decode(input, errors='strict'):
 def bin_encode(input, errors='strict'):
     """print 8 bits of whatever int goes in"""
     output = ""
+    bs = 8
     for c in input:
         l = '{0:0>8b}'.format(ord(c))
-        output += ''.join(l)
+        padding = bs - ((len(l) % bs) or bs)
+        output += ('0' * padding ) + ''.join(l)
     return (output, len(input))
 
 
