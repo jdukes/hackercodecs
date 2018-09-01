@@ -434,6 +434,11 @@ def entity_decode_hex(input, errors='strict'):
 
 
 def ascii85_encode(input, errors='strict'):
+    if _is_unicode(input):
+        # convert from multibyte to codepoint in a horrible way. Good
+        # luck debugging the stupid bugs here fuckers.
+        o, l = bin_encode(input)
+        input, l = bin_decode(o)
     #encoding is adobe not btoa
     bs = 4
     padding = bs - ((len(input) % bs) or bs)

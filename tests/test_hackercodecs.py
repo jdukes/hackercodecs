@@ -45,8 +45,9 @@ class TestHelperFunctions(unittest.TestCase):
         assert data == decoded
 
     def test_rotx_codec_generator(self):
-        # self.assertEqual(expected, rotx_codec_generator(rotval))
-        assert False # TODO: implement your test here
+        # we proved rotx above
+        codec = rotx_codec_generator(10)
+        self.assertEqual(codec.name, 'rot10')
 
     def test_get_codecs_list(self):
         # self.assertEqual(expected, get_codecs_list())
@@ -93,13 +94,13 @@ class TestCodecs(unittest.TestCase):
         assert s.encode('bin') == decoded.encode('bin'), (
             "{} != {}".format(s, decoded))
 
-    # @given(st.text())
-    # def test_ascii85(self, s):
-    #     # u'\x80'
-    #     assume(all(ord(c) <= 255 for c in s))
-    #     encoded, encoded_len = ascii85_encode(s)
-    #     decoded, decoded_len = ascii85_decode(encoded)
-    #     assert s.encode('bin') == decoded.encode('bin')
+    @given(st.text())
+    def test_ascii85(self, s):
+        # u'\x80'
+        assume(all(ord(c) <= 255 for c in s))
+        encoded, encoded_len = ascii85_encode(s)
+        decoded, decoded_len = ascii85_decode(encoded)
+        assert s.encode('bin') == decoded.encode('bin')
 
     @given(st.text())
     def test_y(self, s):
