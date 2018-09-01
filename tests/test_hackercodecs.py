@@ -26,10 +26,14 @@ class TestBlocks(unittest.TestCase):
             except StopIteration:
                 pass
 
-class TestParity(unittest.TestCase):
-    def test_parity(self):
-        # self.assertEqual(expected, parity(bit_array, odd))
-        assert False # TODO: implement your test here
+    @given(st.lists(st.booleans()))
+    def test_parity(self, s):
+        if sum(s) % 2 == 0:
+           assert parity(s) == 0
+           assert parity(s, odd=True) == 1
+        else:
+           assert parity(s) == 1
+           assert parity(s, odd=True) == 0
 
 class TestRotx(unittest.TestCase):
     def test_rotx(self):
