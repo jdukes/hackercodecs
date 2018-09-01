@@ -273,6 +273,9 @@ yenc_escape = [0x00, 0x0a, 0x0d, ord('='), ord('.')]
 
 
 def blocks(data, size):
+    assert (len(data) == 0 or len(data) >= size), (
+        "Cannot create blocks of size %d"
+        " from data of len %d") % (size, len(data))
     assert (len(data) % size) == 0, \
         "Cannot divide into blocks of size %s" % size
     for i in xrange(0, len(data), size):

@@ -10,6 +10,7 @@ class TestHelperFunctions(unittest.TestCase):
     def test_blocks(self, s):
         data, size = s
         assume(size > 0) # we don't need to check divide by zero
+        assume(size < 2**32) # block size absurd, ignore
         if not ((len(data) % size) == 0):
             # make sure we assert here
             try:
