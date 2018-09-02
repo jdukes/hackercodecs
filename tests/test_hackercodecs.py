@@ -99,14 +99,16 @@ class TestCodecs(unittest.TestCase):
         assume(all(ord(c) <= 255 for c in s))
         encoded, encoded_len = y_encode(s)
         decoded, decoded_len = y_decode(encoded)
-        assert s.encode('bin') == decoded.encode('bin')
+        assert s.encode('bin') == decoded.encode('bin'), (
+            "{} != {}".format(repr(s), repr(decoded)))
 
     # these need a lot of fixing
     @given(st.text())
     def test_aba_track_2(self, s):
         encoded, encoded_len = aba_track_2_encode(s)
         decoded, decoded_len = aba_track_2_decode(encoded)
-        assert s.encode('bin') == decoded.encode('bin')
+        assert s.encode('bin') == decoded.encode('bin'), (
+            "{} != {}".format(repr(s), repr(decoded)))
 
 
 if __name__ == '__main__':
